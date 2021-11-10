@@ -1,0 +1,32 @@
+{
+  "name": "two-way-scroll",
+  "version": "1.0.0",
+  "description": "Infinite loading data or images on web pages by two-way scroll",
+  "main": "two-way-scroll.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ordinary9843/twoWayScroll.git"
+  },
+  "keywords": [
+    "two-way-scroll",
+    "infinite-scroll",
+    "jquery-plugin",
+    "jquery",
+    "javascript"
+  ],
+  "author": {
+    "name": "Jerry Chen",
+    "url": "https://github.com/ordinary9843"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ordinary9843/twoWayScroll/issues"
+  },
+  "homepage": "https://github.com/ordinary9843/twoWayScroll#readme",
+  "dependencies": {
+    "jquery": "^1.9.1"
+  }
+}

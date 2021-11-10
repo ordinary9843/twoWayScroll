@@ -1,17 +1,12 @@
 # twoWayScroll - Infinite loading data or images on web pages by two-way scroll
 
 * Copyright &copy; [Jerry Chen](https://webtopian.com)
-* GitHub [twoWayScroll](https://github.com/ordinary9843/twoWayScroll)
-* http://www.opensource.org/licenses/mit-license.php
+* [GitHub](https://github.com/ordinary9843/twoWayScroll)
+* [MIT]http://www.opensource.org/licenses/mit-license.php
 
 > Requires jQuery v1.9.1+
 
-## Facebook Page
-
-Follow us on Facebook for commit updates: https://www.facebook.com/jScroll.Infinite.Scrolling
-
 ## Usage
-
 The `twoWayScroll` method is called on the selector for which you want your scrollable content contained within. For example:
 
 ```javascript
