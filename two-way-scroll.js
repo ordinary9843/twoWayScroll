@@ -2,13 +2,9 @@
  * twoWayScroll - Infinite loading data or images on web pages by two-way scroll
  *
  * @copyright Jerry Chen
- * 
  * @license MIT License
- * 
  * @author Jerry Chen (https://github.com/ordinary9843/twoWayScroll)
- * 
  * @version 1.0.0
- * 
  * @requires jQuery v1.9.1+
  */
 (function ($) {
@@ -17,7 +13,6 @@
 
     $.twoWayScroll = {
         defaults: {
-            autoTrigger: true,
             replaceState: true,
             padding: 0,
             prevLoadHeight: 1.5,
@@ -150,57 +145,35 @@
                 let next = _e.find(_options.nextSelector).first();
 
                 if (prev.length) {
-                    if (_options.autoTrigger) {
-                        _wrap(prev);
+                    _wrap(prev);
 
-                        let scrollingBodyHeight = _body.height() - _e.offset().top;
-                        let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
-                        let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
+                    let scrollingBodyHeight = _body.height() - _e.offset().top;
+                    let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
+                    let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
 
-                        if (scrollingHeight > windowHeight) {
-                            _observe();
-                        }
-
-                        _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
-                            return _observe();
-                        });
-                    } else {
-                        _scroll.unbind('.twoWayScroll');
-
-                        prev.bind('click.twoWayScroll', function () {
-                            _wrap(prev);
-                            _prevLoad();
-
-                            return;
-                        });
+                    if (scrollingHeight > windowHeight) {
+                        _observe();
                     }
+
+                    _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
+                        return _observe();
+                    });
                 }
 
                 if (next.length) {
-                    if (_options.autoTrigger) {
-                        _wrap(next);
+                    _wrap(next);
 
-                        let scrollingBodyHeight = _body.height() - _e.offset().top;
-                        let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
-                        let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
+                    let scrollingBodyHeight = _body.height() - _e.offset().top;
+                    let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
+                    let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
 
-                        if (scrollingHeight <= windowHeight) {
-                            _observe();
-                        }
-
-                        _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
-                            return _observe();
-                        });
-                    } else {
-                        _scroll.unbind('.twoWayScroll');
-
-                        next.bind('click.twoWayScroll', function () {
-                            _wrap(next);
-                            _nextLoad();
-
-                            return;
-                        });
+                    if (scrollingHeight <= windowHeight) {
+                        _observe();
                     }
+
+                    _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
+                        return _observe();
+                    });
                 }
             },
             _prevLoad = function () {
