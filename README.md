@@ -16,8 +16,8 @@ $('#twoWayScroll').twoWayScroll();
 The `twoWayScroll` method takes an optional object literal as a parameter for overriding the default options. An example of how this can be done is shown below.
 
 ```html
-<div id="infiniteScroll">
-    <div class="infinite-scroll">something...</div>
+<div id="twoWayScroll">
+    <div class="two-way-scroll">data or images</div>
     <ul class="pagination">
         <a href="#" class="page-link" rel="prev">prev</a>
         <a href="#" class="page-link" rel="next">next</a>
@@ -27,20 +27,17 @@ The `twoWayScroll` method takes an optional object literal as a parameter for ov
 
 ```javascript
 $('#twoWayScroll').twoWayScroll({
-    autoTrigger: true,
-    replaceState: true,
     padding: 0,
-    prevLoadHeight: 1.5,
+    prevLoadHeight: 1,
     prevSelector: '.pagination .page-link[rel="prev"]',
     nextSelector: '.pagination .page-link[rel="next"]',
-    contentSelector: '.infinite-scroll',
+    contentSelector: '.two-way-scroll',
     pagingSelector: 'ul.pagination',
-    loadingHtml: '<img src="loading.svg" />',
-    loading: function () {
-        // do something...
-    },
-    callback: function(url, element) {
-        // do something...
+    loadingHtml: `<img src="loading.svg" />`,
+    done: function(url, element) {
+
+        // hide your pagination
+        $('ul.pagination').hide();
     }
 });
 ```
@@ -49,12 +46,13 @@ $('#twoWayScroll').twoWayScroll({
 * `replaceState (true)` - When set to true, will enable `history.replaceState` immediate change current url params.
 * `padding (0)` - The distance from the bottom of the scrollable content at which to trigger the loading of the next set of content.
 * `prevLoadHeight (1)` - The distance from the bottom of the scrollable content at which to trigger the loading of the next set of content.
-* `nextSelector ('a:last')` - The selector to use for finding the link which contains the href pointing to the next set of content. If this selector is not found, or if it does not contain a href attribute, jScroll will self-destroy and unbind from the element upon which it was called.
-* `contentSelector ('')` - A convenience selector for loading only part of the content in the response for the next set of content. This selector will be ignored if left blank and will apply the entire response to the DOM.
-* `pagingSelector ('')` - Optionally define a selector for your paging controls so that they will be hidden, instead of just hiding the next page link.
+* `prevSelector ('.pagination .page-link[rel="prev"]')` - The selector to use for finding the link which contains the href pointing to the prev set of content. If this selector is not found, or if it does not contain a href attribute, twoWayScroll will self-destroy and unbind from the element upon which it was called.
+* `nextSelector ('.pagination .page-link[rel="next"]')` - The selector to use for finding the link which contains the href pointing to the next set of content. If this selector is not found, or if it does not contain a href attribute, twoWayScroll will self-destroy and unbind from the element upon which it was called.
+* `contentSelector ('.two-way-scroll')` - A convenience selector for loading only part of the content in the response for the next set of content. This selector will be ignored if left blank and will apply the entire response to the DOM.
+* `pagingSelector ('ul.pagination')` - Optionally define a selector for your paging controls so that they will be hidden, instead of just hiding the next page link.
 * `loadingHtml ('<small>Loading...</small>')` - The HTML to show at the bottom of the content while loading the next set.
 * `loading` (false) - A JavaScript function to run after the loadingHtml has been drawn.
-* `callback (false)` - Optionally define a callback function to be called after a set of content has been loaded.
+* `done (false)` - Optionally define a callback function to be called after a set of content has been loaded.
 
 For more information on the `contentSelector` option and how it loads a response fragment, see the [jQuery documentation for the .load() method](https://api.jquery.com/load/).
 

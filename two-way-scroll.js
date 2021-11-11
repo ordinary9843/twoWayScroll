@@ -4,7 +4,7 @@
  * @copyright Jerry Chen
  * @license MIT License
  * @author Jerry Chen (https://github.com/ordinary9843/twoWayScroll)
- * @version 1.0.0
+ * @version 1.1.0
  * @requires jQuery v1.9.1+
  */
 (function ($) {
@@ -16,62 +16,67 @@
             replaceState: true,
             padding: 0,
             prevLoadHeight: 1.5,
-            prevSelector: 'a:first',
-            nextSelector: 'a:last',
-            contentSelector: '',
-            pagingSelector: '',
+            prevSelector: '.pagination .page-link[rel="prev"]',
+            nextSelector: '.pagination .page-link[rel="next"]',
+            contentSelector: '.two-way-scroll',
+            pagingSelector: 'ul.pagination',
             loadingHtml: '<span>Loading</span>',
             loading: false,
-            callback: false
+            done: false
         }
     };
 
     let twoWayScroll = function (_e, options) {
-        let _data = _e.data('twoWayScroll'),
-            _userOptions = (typeof options === 'function') ? { callback: options } : options,
-            _options = $.extend({}, $.twoWayScroll.defaults, _userOptions, _data || {}),
-            _isWindow = (_e.css('overflow-y') === 'visible'),
-            _prev = _e.find(_options.prevSelector).first(),
-            _next = _e.find(_options.nextSelector).first(),
-            _window = $(window),
-            _body = $('body'),
-            _scroll = _isWindow ? _window : _e,
-            _prevHref = $.trim(_prev.prop('href') + ' ' + _options.contentSelector),
-            _nextHref = $.trim(_next.prop('href') + ' ' + _options.contentSelector),
-            _preloadImage = function () {
-                let src = $(_options.loadingHtml).filter('img').attr('src');
+        let _data = _e.data('twoWayScroll');
+        let _userOptions = {};
 
-                if (src) {
-                    let image = new Image();
+        if (options) {
+            _userOptions = (typeof options === 'function') ? { done: options } : options;
+        }
 
-                    image.src = src;
+        let _options = $.extend({}, $.twoWayScroll.defaults, _userOptions, _data || {});
+        let _isWindow = (_e.css('overflow-y') === 'visible');
+        let _prev = _e.find(_options.prevSelector).first();
+        let _next = _e.find(_options.nextSelector).first();
+        let _window = $(window);
+        let _body = $('body');
+        let _scroll = (_isWindow) ? _window : _e;
+        let _prevHref = $.trim(_prev.prop('href') + ' ' + _options.contentSelector);
+        let _nextHref = $.trim(_next.prop('href') + ' ' + _options.contentSelector);
+        let _preloadImage = function () {
+            let src = $(_options.loadingHtml).filter('img').attr('src');
+
+            if (src) {
+                let image = new Image();
+
+                image.src = src;
+            }
+        };
+        let _wrapContent = function () {
+            if (!_e.find('.twoWayScroll-inner').length) {
+                _e.contents().wrapAll('<div class="twoWayScroll-inner" />');
+            }
+        };
+        let _wrap = function (target) {
+            let parent;
+
+            if (_options.pagingSelector) {
+                target.closest(_options.pagingSelector).hide();
+            } else {
+                parent = target.parent().not('.twoWayScroll-inner, .twoWayScroll-added').addClass('twoWayScroll-parent').hide();
+
+                if (!parent.length) {
+                    target.wrap('<div class="twoWayScroll-parent" />').parent().hide();
                 }
-            },
-            _wrapContent = function () {
-                if (!_e.find('.twoWayScroll-inner').length) {
-                    _e.contents().wrapAll('<div class="twoWayScroll-inner" />');
-                }
-            },
-            _wrap = function (target) {
-                let parent;
-
-                if (_options.pagingSelector) {
-                    target.closest(_options.pagingSelector).hide();
-                } else {
-                    parent = target.parent().not('.twoWayScroll-inner, .twoWayScroll-added').addClass('twoWayScroll-parent').hide();
-
-                    if (!parent.length) {
-                        target.wrap('<div class="twoWayScroll-parent" />').parent().hide();
-                    }
-                }
-            },
-            _destroy = function () {
-                return _scroll.unbind('.twoWayScroll')
-                    .removeData('twoWayScroll')
-                    .find('.twoWayScroll-inner').children().unwrap()
-                    .filter('.twoWayScroll-added').children().unwrap();
-            },
-            _observe = function () {
+            }
+        };
+        let _destroy = function () {
+            return _scroll.unbind('.twoWayScroll')
+                .removeData('twoWayScroll')
+                .find('.twoWayScroll-inner').children().unwrap()
+                .filter('.twoWayScroll-added').children().unwrap();
+        };
+        let _observe = function () {
                 if (_e.is(':visible')) {
                     _wrapContent();
 
@@ -118,156 +123,156 @@
                         return _nextLoad();
                     }
                 }
-            },
-            _isPrevHref = function (data) {
-                data = data || _e.data('twoWayScroll');
-
-                if (!data || !data.prevHref) {
-                    return false;
-                } else {
-                    _bind();
-
-                    return true;
-                }
-            },
-            _isNextHref = function (data) {
-                data = data || _e.data('twoWayScroll');
-                if (!data || !data.nextHref) {
-                    return false;
-                } else {
-                    _bind();
-
-                    return true;
-                }
-            },
-            _bind = function () {
-                let prev = _e.find(_options.prevSelector).first();
-                let next = _e.find(_options.nextSelector).first();
-
-                if (prev.length) {
-                    _wrap(prev);
-
-                    let scrollingBodyHeight = _body.height() - _e.offset().top;
-                    let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
-                    let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
-
-                    if (scrollingHeight > windowHeight) {
-                        _observe();
-                    }
-
-                    _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
-                        return _observe();
-                    });
-                }
-
-                if (next.length) {
-                    _wrap(next);
-
-                    let scrollingBodyHeight = _body.height() - _e.offset().top;
-                    let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
-                    let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
-
-                    if (scrollingHeight <= windowHeight) {
-                        _observe();
-                    }
-
-                    _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
-                        return _observe();
-                    });
-                }
-            },
-            _prevLoad = function () {
-                let inner = _e.find('div.twoWayScroll-inner').first();
-                let data = _e.data('twoWayScroll');
-
-                data.prevWaiting = true;
-
-                inner.prepend('<div class="twoWayScroll-added" />')
-                    .children('.twoWayScroll-added').first()
-                    .html('<div class="twoWayScroll-loading" id="twoWayScroll-loading">' + _options.loadingHtml + '</div>')
-                    .promise()
-                    .done(function () {
-                        if (_options.loading) {
-                            _options.loading();
-                        }
-                    });
-
-                return _e.animate({
-                    scrollTop: inner.outerHeight()
-                }, 0, function () {
-                    let prevHref = data.prevHref;
-
-                    inner.find('div.twoWayScroll-added').first().load(prevHref, function (r, status) {
-                        if (status === 'error') {
-                            return _destroy();
-                        }
-
-                        let prev = $(this).find(_options.prevSelector).first();
-
-                        data.prevWaiting = false;
-                        data.prevHref = (prev.prop('href')) ? $.trim(prev.prop('href') + ' ' + _options.contentSelector) : false;
-
-                        $('.twoWayScroll-parent', _e).remove();
-
-                        _window.scrollTop($(window).height());
-
-                        _isPrevHref();
-
-                        if (_options.callback) {
-                            let response = prevHref.split(' ');
-                            let url = response[0];
-                            let element = response[1];
-                            
-                            _options.callback.call(this, url, element);
-                        }
-                    });
-                });
-            },
-            _nextLoad = function () {
-                let inner = _e.find('div.twoWayScroll-inner').first();
-                let data = _e.data('twoWayScroll');
-
-                data.nextWaiting = true;
-
-                inner.append('<div class="twoWayScroll-added" />')
-                    .children('.twoWayScroll-added').last()
-                    .html('<div class="twoWayScroll-loading" id="twoWayScroll-loading">' + _options.loadingHtml + '</div>')
-                    .promise()
-                    .done(function () {
-                        if (_options.loading) {
-                            _options.loading();
-                        }
-                    });
-
-                return _e.animate({
-                    scrollTop: inner.outerHeight()
-                }, 0, function () {
-                    let nextHref = data.nextHref;
-
-                    inner.find('div.twoWayScroll-added').last().load(nextHref, function (r, status) {
-                        if (status === 'error') {
-                            return _destroy();
-                        }
-
-                        let next = $(this).find(_options.nextSelector).first();
-
-                        data.nextWaiting = false;
-                        data.nextHref = (next.prop('href')) ? $.trim(next.prop('href') + ' ' + _options.contentSelector) : false;
-
-                        $('.twoWayScroll-parent', _e).remove();
-
-                        _isNextHref();
-
-                        if (_options.callback) {
-                            let response = nextHref.split(' ');
-                            let url = response[0];
-                            let element = response[1];
-
-                            _options.callback.call(this, url, element);
-                        }
-                    });
-                });
             };
+        let _isPrevHref = function (data) {
+            data = data || _e.data('twoWayScroll');
+
+            if (!data || !data.prevHref) {
+                return false;
+            } else {
+                _bind();
+
+                return true;
+            }
+        };
+        let _isNextHref = function (data) {
+            data = data || _e.data('twoWayScroll');
+            if (!data || !data.nextHref) {
+                return false;
+            } else {
+                _bind();
+
+                return true;
+            }
+        };
+        let _bind = function () {
+            let prev = _e.find(_options.prevSelector).first();
+            let next = _e.find(_options.nextSelector).first();
+
+            if (prev.length) {
+                _wrap(prev);
+
+                let scrollingBodyHeight = _body.height() - _e.offset().top;
+                let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
+                let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
+
+                if (scrollingHeight > windowHeight) {
+                    _observe();
+                }
+
+                _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
+                    return _observe();
+                });
+            }
+
+            if (next.length) {
+                _wrap(next);
+
+                let scrollingBodyHeight = _body.height() - _e.offset().top;
+                let scrollingHeight = (_e.height() < scrollingBodyHeight) ? _e.height() : scrollingBodyHeight;
+                let windowHeight = (_e.offset().top - _window.scrollTop() > 0) ? _window.height() - (_e.offset().top - $(window).scrollTop()) : _window.height();
+
+                if (scrollingHeight <= windowHeight) {
+                    _observe();
+                }
+
+                _scroll.unbind('.twoWayScroll').bind('scroll.twoWayScroll', function () {
+                    return _observe();
+                });
+            }
+        };
+        let _prevLoad = function () {
+            let inner = _e.find('div.twoWayScroll-inner').first();
+            let data = _e.data('twoWayScroll');
+
+            data.prevWaiting = true;
+
+            inner.prepend('<div class="twoWayScroll-added" />')
+                .children('.twoWayScroll-added').first()
+                .html('<div class="twoWayScroll-loading" id="twoWayScroll-loading">' + _options.loadingHtml + '</div>')
+                .promise()
+                .done(function () {
+                    if (_options.loading) {
+                        _options.loading();
+                    }
+                });
+
+            return _e.animate({
+                scrollTop: inner.outerHeight()
+            }, 0, function () {
+                let prevHref = data.prevHref;
+
+                inner.find('div.twoWayScroll-added').first().load(prevHref, function (r, status) {
+                    if (status === 'error') {
+                        return _destroy();
+                    }
+
+                    let prev = $(this).find(_options.prevSelector).first();
+
+                    data.prevWaiting = false;
+                    data.prevHref = (prev.prop('href')) ? $.trim(prev.prop('href') + ' ' + _options.contentSelector) : false;
+
+                    $('.twoWayScroll-parent', _e).remove();
+
+                    _window.scrollTop($(window).height());
+
+                    _isPrevHref();
+
+                    if (_options.done) {
+                        let response = prevHref.split(' ');
+                        let url = response[0];
+                        let element = response[1];
+                        
+                        _options.done.call(this, url, element);
+                    }
+                });
+            });
+        };
+        let _nextLoad = function () {
+            let inner = _e.find('div.twoWayScroll-inner').first();
+            let data = _e.data('twoWayScroll');
+
+            data.nextWaiting = true;
+
+            inner.append('<div class="twoWayScroll-added" />')
+                .children('.twoWayScroll-added').last()
+                .html('<div class="twoWayScroll-loading" id="twoWayScroll-loading">' + _options.loadingHtml + '</div>')
+                .promise()
+                .done(function () {
+                    if (_options.loading) {
+                        _options.loading();
+                    }
+                });
+
+            return _e.animate({
+                scrollTop: inner.outerHeight()
+            }, 0, function () {
+                let nextHref = data.nextHref;
+
+                inner.find('div.twoWayScroll-added').last().load(nextHref, function (r, status) {
+                    if (status === 'error') {
+                        return _destroy();
+                    }
+
+                    let next = $(this).find(_options.nextSelector).first();
+
+                    data.nextWaiting = false;
+                    data.nextHref = (next.prop('href')) ? $.trim(next.prop('href') + ' ' + _options.contentSelector) : false;
+
+                    $('.twoWayScroll-parent', _e).remove();
+
+                    _isNextHref();
+
+                    if (_options.done) {
+                        let response = nextHref.split(' ');
+                        let url = response[0];
+                        let element = response[1];
+
+                        _options.done.call(this, url, element);
+                    }
+                });
+            });
+        };
 
         _e.data('twoWayScroll', $.extend({}, _data, {
             initialized: true,
@@ -288,7 +293,7 @@
         return _e;
     };
 
-    $.fn.twoWayScroll = function (m) {
+    $.fn.twoWayScroll = function (options) {
         return this.each(function () {
             let ele = $(this);
             let data = ele.data('twoWayScroll');
@@ -297,7 +302,7 @@
                 return;
             }
 
-            twoWayScroll(ele, m);
+            twoWayScroll(ele, options);
         });
     };
 })(jQuery);
