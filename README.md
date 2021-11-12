@@ -1,6 +1,6 @@
 # twoWayScroll - Infinite loading data or images on web pages by two-way scroll
 
-* Copyright &copy; [Jerry Chen](https://webtopian.com)
+* Copyright &copy; [Jerry Chen](https://ordinary9843.medium.com/)
 * [GitHub](https://github.com/ordinary9843/twoWayScroll)
 * [MIT]http://www.opensource.org/licenses/mit-license.php
 
