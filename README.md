@@ -2,7 +2,7 @@
 
 * Copyright &copy; [Jerry Chen](https://ordinary9843.medium.com/)
 * [GitHub](https://github.com/ordinary9843/twoWayScroll)
-* [MIT]http://www.opensource.org/licenses/mit-license.php
+* [MIT](http://www.opensource.org/licenses/mit-license.php)
 
 > Requires jQuery v1.9.1+
 
