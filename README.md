@@ -45,7 +45,7 @@ $('#twoWayScroll').twoWayScroll({
 ## Options
 * `replaceState (true)` - When set to true, will enable `history.replaceState` immediate change current url params.
 * `padding (0)` - The distance from the bottom of the scrollable content at which to trigger the loading of the next set of content.
-* `prevLoadHeight (1)` - The distance from the bottom of the scrollable content at which to trigger the loading of the next set of content.
+* `prevLoadHeight (1)` - The distance from the bottom of the scrollable content at which to trigger the loading of the prev set of content.
 * `prevSelector ('.pagination .page-link[rel="prev"]')` - The selector to use for finding the link which contains the href pointing to the prev set of content. If this selector is not found, or if it does not contain a href attribute, twoWayScroll will self-destroy and unbind from the element upon which it was called.
 * `nextSelector ('.pagination .page-link[rel="next"]')` - The selector to use for finding the link which contains the href pointing to the next set of content. If this selector is not found, or if it does not contain a href attribute, twoWayScroll will self-destroy and unbind from the element upon which it was called.
 * `contentSelector ('.two-way-scroll')` - A convenience selector for loading only part of the content in the response for the next set of content. This selector will be ignored if left blank and will apply the entire response to the DOM.
