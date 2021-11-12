@@ -1,6 +1,6 @@
 {
   "name": "two-way-scroll",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Infinite loading data or images on web pages by two-way scroll",
   "main": "two-way-scroll.js",
   "scripts": {

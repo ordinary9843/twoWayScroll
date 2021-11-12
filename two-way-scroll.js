@@ -4,7 +4,7 @@
  * @copyright Jerry Chen
  * @license MIT License
  * @author Jerry Chen (https://github.com/ordinary9843/twoWayScroll)
- * @version 1.1.1
+ * @version 1.1.2
  * @requires jQuery v1.9.1+
  */
 (function ($) {
@@ -107,7 +107,7 @@
                         }
                     }
 
-                    if (!data.prevWaiting && prevUrl !== 'undefined' && totalHeight + _options.padding < _window.height() * _options.prevLoadHeight) {
+                    if (!data.prevWaiting && prevUrl !== 'undefined' && totalHeight + _options.padding < _window.height() / _options.prevLoadHeight) {
                         if (_options.replaceState === true) {
                             history.replaceState(null, document.title, prevUrl);
                         }
@@ -214,7 +214,7 @@
 
                     $('.twoWayScroll-parent', _e).remove();
 
-                    _window.scrollTop($(window).height());
+                    _window.scrollTop($(window).height() * _options.prevLoadHeight);
 
                     _isPrevHref();
 
