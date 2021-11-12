@@ -4,7 +4,7 @@
  * @copyright Jerry Chen
  * @license MIT License
  * @author Jerry Chen (https://github.com/ordinary9843/twoWayScroll)
- * @version 1.1.0
+ * @version 1.1.1
  * @requires jQuery v1.9.1+
  */
 (function ($) {
@@ -15,7 +15,7 @@
         defaults: {
             replaceState: true,
             padding: 0,
-            prevLoadHeight: 1.5,
+            prevLoadHeight: 1,
             prevSelector: '.pagination .page-link[rel="prev"]',
             nextSelector: '.pagination .page-link[rel="next"]',
             contentSelector: '.two-way-scroll',
@@ -107,7 +107,7 @@
                         }
                     }
 
-                    if (!data.prevWaiting && prevUrl !== 'undefined' && totalHeight + _options.padding < _window.height() / _options.prevLoadHeight) {
+                    if (!data.prevWaiting && prevUrl !== 'undefined' && totalHeight + _options.padding < _window.height() * _options.prevLoadHeight) {
                         if (_options.replaceState === true) {
                             history.replaceState(null, document.title, prevUrl);
                         }
