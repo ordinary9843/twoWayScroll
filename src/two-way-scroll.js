@@ -2,9 +2,9 @@
  * twoWayScroll - Infinite loading data or images on web pages by two-way scroll
  *
  * @copyright Jerry Chen
- * @license MIT License
- * @author Jerry Chen (https://github.com/ordinary9843/twoWayScroll)
- * @version 1.1.7
+ * @license MIT License (https://opensource.org/licenses/mit-license.php)
+ * @author Jerry Chen (https://ordinary9843.medium.com/)
+ * @version 1.1.8
  * @requires jQuery v1.9.1+
  */
 (function ($) {
