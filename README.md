@@ -49,7 +49,7 @@ $('#twoWayScroll').twoWayScroll({
 * `nextSelector ('.pagination .page-link[rel="next"]')` - The selector to use for finding the link which contains the href pointing to the next set of content. If this selector is not found, or if it does not contain a href attribute, twoWayScroll will self-destroy and unbind from the element upon which it was called.
 * `contentSelector ('.two-way-scroll')` - A convenience selector for loading only part of the content in the response for the next set of content. This selector will be ignored if left blank and will apply the entire response to the DOM.
 * `pagingSelector ('ul.pagination')` - Optionally define a selector for your paging controls so that they will be hidden, instead of just hiding the next page link.
-* `loadingHtml ('<small>Loading...</small>')` - The HTML to show at the bottom of the content while loading the next set.
+* `loadingHtml ('<div>Loading...</div>')` - The HTML to show at the bottom of the content while loading the next set.
 * `loading` (false) - A JavaScript function to run after the loadingHtml has been drawn.
 * `done (false)` - Optionally define a callback function to be called after a set of content has been loaded.
 
