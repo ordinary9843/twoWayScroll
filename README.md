@@ -1,9 +1,10 @@
 # twoWayScroll - Infinite loading data or images on web pages by two-way scroll
 
-* Copyright &copy; [Jerry Chen](https://ordinary9843.medium.com/)
+## Source
 * [GitHub](https://github.com/ordinary9843/twoWayScroll)
-* [MIT](http://www.opensource.org/licenses/mit-license.php)
+* [npm](https://www.npmjs.com/package/two-way-scroll)
 
+## Require
 > Requires jQuery v1.9.1+
 
 ## Usage
@@ -33,11 +34,9 @@ $('#twoWayScroll').twoWayScroll({
     nextSelector: '.pagination .page-link[rel="next"]',
     contentSelector: '.two-way-scroll',
     pagingSelector: 'ul.pagination',
-    loadingHtml: `<img src="loading.svg" />`,
+    loadingHtml: '<div>Loading...</span>',
     done: function(url, element) {
-
-        // hide your pagination
-        $('ul.pagination').hide();
+        $('ul.pagination').hide(); // hide your pagination
     }
 });
 ```
@@ -57,5 +56,25 @@ $('#twoWayScroll').twoWayScroll({
 For more information on the `contentSelector` option and how it loads a response fragment, see the [jQuery documentation for the .load() method](https://api.jquery.com/load/).
 
 
-## LICENSES:
-* MIT: http://www.opensource.org/licenses/mit-license.php
+## Licenses
+(The [MIT](http://www.opensource.org/licenses/mit-license.php) License)
+
+Copyright &copy; [Jerry Chen](https://ordinary9843.medium.com/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE

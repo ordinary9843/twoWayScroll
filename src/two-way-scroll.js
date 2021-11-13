@@ -4,7 +4,7 @@
  * @copyright Jerry Chen
  * @license MIT License
  * @author Jerry Chen (https://github.com/ordinary9843/twoWayScroll)
- * @version 1.1.2
+ * @version 1.1.7
  * @requires jQuery v1.9.1+
  */
 (function ($) {
