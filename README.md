@@ -5,7 +5,7 @@
 * [npm](https://www.npmjs.com/package/two-way-scroll)
 
 ## Require
-> Requires jQuery v1.9.1+
+> jQuery v1.9.1+
 
 ## Usage
 The `twoWayScroll` method is called on the selector for which you want your scrollable content contained within. For example:
