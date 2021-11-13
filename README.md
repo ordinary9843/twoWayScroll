@@ -4,7 +4,7 @@
 * [GitHub](https://github.com/ordinary9843/twoWayScroll)
 * [npm](https://www.npmjs.com/package/two-way-scroll)
 
-## Require
+## Requires
 > jQuery v1.9.1+
 
 ## Usage
