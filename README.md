@@ -34,7 +34,7 @@ $('#twoWayScroll').twoWayScroll({
     nextSelector: '.pagination .page-link[rel="next"]',
     contentSelector: '.two-way-scroll',
     pagingSelector: 'ul.pagination',
-    loadingHtml: '<div>Loading...</span>',
+    loadingHtml: '<div>Loading...</div>',
     done: function(url, element) {
         $('ul.pagination').hide(); // hide your pagination
     }
